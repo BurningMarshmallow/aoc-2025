@@ -1,20 +1,26 @@
 # aoc_2025
 
-[![Package Version](https://img.shields.io/hexpm/v/aoc_2025)](https://hex.pm/packages/aoc_2025)
-[![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/aoc_2025/)
+In this repository, I will provide solutions for the Advent of Code[^aoc] puzzles using [Gleam][gleam] language.
 
-```sh
-gleam add aoc_2025@1
-```
-```gleam
-import aoc_2025
+[^aoc]:
+    [Advent of Code][aoc] – An annual event of Christmas-oriented programming challenges started December 2015.
+    Every year since then, beginning on the first day of December, a programming puzzle is published every day for twenty-four days.
+    You can solve the puzzle and provide an answer using the language of your choice.
 
-pub fn main() -> Nil {
-  // TODO: An example of the project in use
-}
-```
+[aoc]: https://adventofcode.com
+[gleam]: https://gleam.run/
 
-Further documentation can be found at <https://hexdocs.pm/aoc_2025>.
+### Previous years
+[2024 (TS)](https://github.com/BurningMarshmallow/aoc-2024)
+
+[2023 (Dart)](https://github.com/BurningMarshmallow/aoc-2023)
+
+[2022 (Zig)](https://github.com/BurningMarshmallow/aoc-2022)
+
+[2021 (Kotlin)](https://github.com/BurningMarshmallow/aoc-2021)
+
+✨🎄🎁🎄🎅🎄🎁🎄✨
+
 
 ## Development
 
