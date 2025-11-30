@@ -10,6 +10,24 @@ pub fn debug(value: anything) -> anything {
   value
 }
 
+pub fn part2(input: String) -> Int {
+  let assert Ok(dont_reg) = regexp.from_string("don\\'t\\(\\)")
+  let assert Ok(do_reg) = regexp.from_string("do\\(\\)")
+
+  let assert [h, ..t] =
+    regexp.split(dont_reg, input)
+    |> debug
+  t
+  |> list.map(fn(s) {
+    case regexp.split(do_reg, s) {
+      [_, ..tail] -> part1(string.join(tail, ""))
+      _ -> 0
+    }
+  })
+  |> int.sum
+  |> int.add(part1(h) |> debug)
+}
+
 pub fn part1(input: String) -> Int {
   let assert Ok(re) = regexp.from_string("mul\\(\\d+\\,\\d+\\)")
   re
@@ -23,22 +41,6 @@ pub fn part1(input: String) -> Int {
     })
   })
   |> int.sum
-}
-
-pub fn part2(input: String) -> Int {
-  let assert Ok(dont_reg) = regexp.from_string("don\\'t\\(\\)")
-  let assert Ok(do_reg) = regexp.from_string("do\\(\\)")
-
-  let assert [h, ..t] = regexp.split(dont_reg, input)
-  t
-  |> list.map(fn(s) {
-    case regexp.split(do_reg, s) {
-      [_, ..tail] -> part1(string.join(tail, ""))
-      _ -> 0
-    }
-  })
-  |> int.sum
-  |> int.add(part1(h))
 }
 
 pub fn main() {
