@@ -1,14 +1,8 @@
 import gleam/int
-import gleam/io
 import gleam/list
 import gleam/regexp
 import gleam/string
 import simplifile
-
-pub fn debug(value: anything) -> anything {
-  io.println(string.inspect(value))
-  value
-}
 
 pub fn part1(input: String) -> Int {
   let assert Ok(re) = regexp.from_string("mul\\(\\d+\\,\\d+\\)")
@@ -45,9 +39,9 @@ pub fn main() {
   let assert Ok(data) = simplifile.read("inputs/test/input.txt")
   data
   |> part1
-  |> debug
+  |> echo
 
   data
   |> part2
-  |> debug
+  |> echo
 }
