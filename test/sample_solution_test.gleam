@@ -1,6 +1,6 @@
 import gleeunit
 import gleeunit/should
-import sample_solution
+import sample/sample_solution
 
 pub fn main() {
   gleeunit.main()

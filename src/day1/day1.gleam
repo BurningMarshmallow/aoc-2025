@@ -7,8 +7,22 @@ type State {
   State(current: Int, clicks: Int)
 }
 
+const sample = "L68
+L30
+R48
+L5
+R60
+L55
+L1
+L99
+R14
+L82"
+
 pub fn run() {
-  let assert Ok(data) = simplifile.read("inputs/day1/input.txt")
+  let assert Ok(data) = simplifile.read("input.txt")
+  let assert 3 = part1(sample)
+  let assert 6 = part2(sample)
+
   data
   |> part1
   |> echo

@@ -36,7 +36,7 @@ pub fn part2(input: String) -> Int {
 }
 
 pub fn main() {
-  let assert Ok(data) = simplifile.read("inputs/sample/input.txt")
+  let assert Ok(data) = simplifile.read("src/sample/input.txt")
   data
   |> part1
   |> echo
