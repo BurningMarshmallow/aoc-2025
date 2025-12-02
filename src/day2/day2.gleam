@@ -4,7 +4,7 @@ import gleam/list
 import gleam/result
 import gleam/string
 import lib/helpers
-import lib/timing
+import lib/timing.{run_timed}
 import simplifile
 
 const sample = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
@@ -20,17 +20,6 @@ pub fn run() {
   io.println("Input")
   run_timed(part1, input)
   run_timed(part2, input)
-}
-
-fn run_timed(solve: fn(String) -> Int, input: String) -> Int {
-  let #(execution_time, value) = timing.timed(fn() { solve(input) })
-  io.println(
-    string.inspect(value)
-    <> " (in "
-    <> timing.format_execution_time(execution_time)
-    <> ")",
-  )
-  value
 }
 
 pub fn part1(input: String) -> Int {

@@ -1,12 +1,25 @@
 import gleam/erlang/charlist.{type Charlist}
 import gleam/float
 import gleam/int
+import gleam/io
+import gleam/string
 
 @external(erlang, "timer", "tc")
 pub fn timed(fun: fn() -> a) -> #(Int, a)
 
 @external(erlang, "io_lib", "format")
 fn do_format(format: String, data: List(a)) -> Charlist
+
+pub fn run_timed(solve: fn(String) -> Int, input: String) -> Int {
+  let #(execution_time, value) = timed(fn() { solve(input) })
+  io.println(
+    string.inspect(value)
+    <> " (in "
+    <> format_execution_time(execution_time)
+    <> ")",
+  )
+  value
+}
 
 pub fn format_execution_time(execution_time: Int) -> String {
   let #(divisor, precision, unit) = case execution_time {
