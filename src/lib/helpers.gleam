@@ -1,6 +1,12 @@
 import gleam/int
 import gleam/list
+import gleam/pair
+import gleam/result
 import gleam/string
+
+pub fn read_lines(input: String) -> List(String) {
+  string.split(string.replace(input, "\r\n", "\n"), "\n")
+}
 
 pub fn read_range(value: String) -> List(Int) {
   let #(start, end) = case
@@ -11,4 +17,43 @@ pub fn read_range(value: String) -> List(Int) {
     _ -> panic as "Invalid range"
   }
   list.range(start, end)
+}
+
+pub fn sum(values: List(Int)) -> Int {
+  values
+  |> list.reduce(int.add)
+  |> result.unwrap(0)
+}
+
+pub fn sum_with_transform(values: List(a), transform: fn(a) -> Int) -> Int {
+  values
+  |> list.map(transform)
+  |> list.reduce(int.add)
+  |> result.unwrap(0)
+}
+
+pub fn find_index(value: List(a), target: a) -> Result(Int, Nil) {
+  value
+  |> list.index_map(fn(elem, index) { #(index, elem) })
+  |> list.find(fn(x) { pair.second(x) == target })
+  |> result.map(pair.first)
+}
+
+pub fn unsafe_parse_int(value: String) -> Int {
+  let assert Ok(int_value) = int.parse(value)
+  int_value
+}
+
+pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
+  let indices = list.range(0, list.length(arr) - 1)
+
+  list.flat_map(indices, fn(i) {
+    list.map(list.drop(indices, i + 1), fn(j) { #(i, j) })
+  })
+}
+
+pub fn get_at_index(list: List(String), index: Int) -> String {
+  list.drop(list, index)
+  |> list.first
+  |> result.unwrap("Nil")
 }

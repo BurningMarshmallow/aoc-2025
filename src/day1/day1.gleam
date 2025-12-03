@@ -1,6 +1,7 @@
 import gleam/int
 import gleam/list
 import gleam/string
+import lib/helpers
 import simplifile
 
 type State {
@@ -42,9 +43,9 @@ pub fn part2(input: String) -> Int {
 
 fn solve(input: String, method: fn(Int, State) -> Int) -> Int {
   let init_state = State(50, 0)
-  let formatted_input = string.replace(input, "\r\n", "\n")
+  let lines = helpers.read_lines(input)
 
-  list.fold(string.split(formatted_input, "\n"), init_state, fn(acc, line) {
+  list.fold(lines, init_state, fn(acc, line) {
     let assert Ok(direction) = string.first(line)
     let assert Ok(turn) = int.parse(string.drop_start(line, 1))
 

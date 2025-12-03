@@ -1,7 +1,6 @@
 import gleam/int
 import gleam/io
 import gleam/list
-import gleam/result
 import gleam/string
 import lib/helpers
 import lib/timing.{run_timed}
@@ -31,22 +30,24 @@ pub fn part2(input: String) -> Int {
 }
 
 fn solve(input: String, repeated_many_times: Bool) -> Int {
-  let assert Ok(total_num_of_invalid) =
-    list.map(string.split(input, ","), fn(range_str) {
-      let range = helpers.read_range(range_str)
-      let num_of_invalid_in_range =
-        range
-        |> list.filter(fn(value) {
-          case repeated_many_times {
-            True -> is_invalid_when_repeated_many_times(value)
-            False -> is_invalid(value, 2)
-          }
-        })
-        |> list.reduce(int.add)
-      result.unwrap(num_of_invalid_in_range, 0)
+  helpers.sum_with_transform(
+    string.split(input, ","),
+    num_of_invalid_ids(repeated_many_times),
+  )
+}
+
+fn num_of_invalid_ids(repeated_many_times: Bool) -> fn(String) -> Int {
+  fn(range_str) {
+    let range = helpers.read_range(range_str)
+    range
+    |> list.filter(fn(value) {
+      case repeated_many_times {
+        True -> is_invalid_when_repeated_many_times(value)
+        False -> is_invalid(value, 2)
+      }
     })
-    |> list.reduce(int.add)
-  total_num_of_invalid
+    |> helpers.sum
+  }
 }
 
 fn is_invalid_when_repeated_many_times(id: Int) -> Bool {
