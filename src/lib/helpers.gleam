@@ -4,19 +4,13 @@ import gleam/pair
 import gleam/result
 import gleam/string
 
-pub fn read_lines(input: String) -> List(String) {
-  string.split(string.replace(input, "\r\n", "\n"), "\n")
+pub fn unsafe_parse_int(value: String) -> Int {
+  let assert Ok(int_value) = int.parse(value)
+  int_value
 }
 
-pub fn read_range(value: String) -> List(Int) {
-  let #(start, end) = case
-    string.split(value, "-")
-    |> list.filter_map(int.parse)
-  {
-    [start, end] -> #(start, end)
-    _ -> panic as "Invalid range"
-  }
-  list.range(start, end)
+pub fn read_lines(input: String) -> List(String) {
+  string.split(string.replace(input, "\r\n", "\n"), "\n")
 }
 
 pub fn sum(values: List(Int)) -> Int {
@@ -39,9 +33,10 @@ pub fn find_index(value: List(a), target: a) -> Result(Int, Nil) {
   |> result.map(pair.first)
 }
 
-pub fn unsafe_parse_int(value: String) -> Int {
-  let assert Ok(int_value) = int.parse(value)
-  int_value
+pub fn get_at_index(list: List(String), index: Int) -> String {
+  list.drop(list, index)
+  |> list.first
+  |> result.unwrap("Nil")
 }
 
 pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
@@ -52,8 +47,13 @@ pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
   })
 }
 
-pub fn get_at_index(list: List(String), index: Int) -> String {
-  list.drop(list, index)
-  |> list.first
-  |> result.unwrap("Nil")
+pub fn read_range(value: String) -> List(Int) {
+  let #(start, end) = case
+    string.split(value, "-")
+    |> list.filter_map(int.parse)
+  {
+    [start, end] -> #(start, end)
+    _ -> panic as "Invalid range"
+  }
+  list.range(start, end)
 }

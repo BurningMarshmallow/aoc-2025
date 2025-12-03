@@ -34,11 +34,8 @@ pub fn part2(input: String) -> Int {
 }
 
 fn solve_by_brute_part1(input: String) -> Int {
-  let formatted_input = string.replace(input, "\r\n", "\n")
-
-  list.fold(string.split(formatted_input, "\n"), 0, fn(acc, line) {
-    acc + get_max_jolts_by_brute(line)
-  })
+  let lines = helpers.read_lines(input)
+  helpers.sum_with_transform(lines, get_max_jolts_by_brute)
 }
 
 fn get_max_jolts_by_brute(line: String) -> Int {
@@ -63,10 +60,10 @@ fn pairs(values: List(Int)) -> List(Int) {
 fn solve(input: String, length: Int) -> Int {
   let lines = helpers.read_lines(input)
 
-  list.fold(lines, 0, fn(acc, line) {
+  helpers.sum_with_transform(lines, fn(line) {
     let max_jolts_str = get_max_jolts(string.to_graphemes(line), length)
     let max_jolts = helpers.unsafe_parse_int(max_jolts_str)
-    acc + max_jolts
+    max_jolts
   })
 }
 
