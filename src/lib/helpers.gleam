@@ -13,6 +13,15 @@ pub fn read_lines(input: String) -> List(String) {
   string.split(string.replace(input, "\r\n", "\n"), "\n")
 }
 
+pub fn get_grid(input: String) -> List(List(#(Int, Int, String))) {
+  let lines = read_lines(input)
+  list.index_map(lines, fn(row, row_idx) {
+    list.index_map(string.split(row, ""), fn(value, col_idx) {
+      #(row_idx, col_idx, value)
+    })
+  })
+}
+
 pub fn sum(values: List(Int)) -> Int {
   values
   |> list.reduce(int.add)
