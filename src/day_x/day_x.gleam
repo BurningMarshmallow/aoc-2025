@@ -1,10 +1,7 @@
-//// Template module dayX
-
-import gleam/int
 import gleam/io
 import gleam/list
-import gleam/result
 import gleam/string
+import lib/helpers
 import lib/timing.{run_timed}
 
 // import simplifile
@@ -39,6 +36,5 @@ fn solve(input: String) -> Int {
 }
 
 fn parse(input: String) -> List(Int) {
-  list.map(string.split(input, " "), int.parse)
-  |> list.map(fn(x) { result.unwrap(x, 0) })
+  list.map(string.split(input, " "), helpers.unsafe_parse_int)
 }

@@ -4,6 +4,10 @@ import gleam/pair
 import gleam/result
 import gleam/string
 
+pub type Interval {
+  Interval(start: Int, end: Int)
+}
+
 pub fn unsafe_parse_int(value: String) -> Int {
   let assert Ok(int_value) = int.parse(value)
   int_value
@@ -57,12 +61,9 @@ pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
 }
 
 pub fn read_range(value: String) -> List(Int) {
-  let #(start, end) = case
+  let assert [start, end] =
     string.split(value, "-")
     |> list.filter_map(int.parse)
-  {
-    [start, end] -> #(start, end)
-    _ -> panic as "Invalid range"
-  }
+
   list.range(start, end)
 }
