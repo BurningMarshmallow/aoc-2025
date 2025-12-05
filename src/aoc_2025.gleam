@@ -1,5 +1,5 @@
-import day4/day4
+import day5/day5
 
 pub fn main() {
-  day4.run()
+  day5.run()
 }
