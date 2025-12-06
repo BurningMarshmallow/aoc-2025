@@ -62,15 +62,15 @@ fn parse_part1(input: String) {
 fn solve_part2(input: String) -> Int {
   let values = parse_part2(input)
 
-  list.fold(values, State(0, 0, "?"), fn(acc, column) {
-    let last_char = result.unwrap(list.last(column), "?")
+  list.fold(values, State(0, 0, ""), fn(acc, column) {
+    let last_char = result.unwrap(list.last(column), "")
     case last_char {
       "*" -> State(acc.total, read_int_from_column(column), "*")
       "+" -> State(acc.total, read_int_from_column(column), "+")
       _ ->
-        case list.all(column, fn(x) { x == " " }) {
+        case list.all(column, fn(cell) { cell == " " }) {
           True -> {
-            State(acc.total + acc.problem_result, 0, "?")
+            State(acc.total + acc.problem_result, 0, "")
           }
           False ->
             case acc.op {
