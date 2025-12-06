@@ -44,13 +44,10 @@ fn solve(input: String) -> Int {
 fn solve_problem(problem: List(String)) -> Int {
   let assert [op, ..values] = list.reverse(problem)
   let rest = list.map(values, helpers.unsafe_parse_int)
-  case op == "*" {
-    True -> helpers.mul(rest)
-    False ->
-      case op == "+" {
-        True -> helpers.sum(rest)
-        False -> panic as "Unknown operator"
-      }
+  case op {
+    "*" -> helpers.mul(rest)
+    "+" -> helpers.sum(rest)
+    _ -> panic as "Unknown operator"
   }
 }
 
@@ -67,19 +64,10 @@ fn solve_part2(input: String) -> Int {
 
   list.fold(values, State(0, 0, "?"), fn(acc, column) {
     let last_char = result.unwrap(list.last(column), "?")
-    case last_char != " " {
-      True ->
-        case last_char == "*" {
-          True -> State(acc.total, read_int_from_column(column), last_char)
-          False ->
-            case last_char == "+" {
-              True -> State(acc.total, read_int_from_column(column), last_char)
-              False -> {
-                panic as "Unknown operator for last char"
-              }
-            }
-        }
-      False ->
+    case last_char {
+      "*" -> State(acc.total, read_int_from_column(column), "*")
+      "+" -> State(acc.total, read_int_from_column(column), "+")
+      _ ->
         case list.all(column, fn(x) { x == " " }) {
           True -> {
             State(acc.total + acc.problem_result, 0, "?")
