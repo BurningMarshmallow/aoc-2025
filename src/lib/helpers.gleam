@@ -9,6 +9,7 @@ pub type Interval {
 }
 
 pub fn unsafe_parse_int(value: String) -> Int {
+  let value = string.trim(value)
   let assert Ok(int_value) = int.parse(value)
   int_value
 }
@@ -27,9 +28,11 @@ pub fn get_grid(input: String) -> List(List(#(Int, Int, String))) {
 }
 
 pub fn sum(values: List(Int)) -> Int {
-  values
-  |> list.reduce(int.add)
-  |> result.unwrap(0)
+  values |> list.fold(0, int.add)
+}
+
+pub fn mul(values: List(Int)) -> Int {
+  values |> list.fold(1, int.multiply)
 }
 
 pub fn sum_with_transform(values: List(a), transform: fn(a) -> Int) -> Int {
