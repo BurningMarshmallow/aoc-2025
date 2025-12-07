@@ -55,6 +55,17 @@ pub fn get_at_index(list: List(String), index: Int) -> String {
   |> result.unwrap("Nil")
 }
 
+pub fn get_at_index_list(list: List(List(String)), index: Int) -> List(String) {
+  list.drop(list, index)
+  |> list.first
+  |> result.unwrap([])
+}
+
+pub fn get_at_index_2d(list: List(List(String)), i: Int, j: Int) -> String {
+  get_at_index_list(list, i)
+  |> get_at_index(j)
+}
+
 pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
   let indices = list.range(0, list.length(arr) - 1)
 
