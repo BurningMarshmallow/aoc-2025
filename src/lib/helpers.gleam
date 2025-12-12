@@ -49,10 +49,11 @@ pub fn find_index(value: List(a), target: a) -> Result(Int, Nil) {
   |> result.map(pair.first)
 }
 
-pub fn get_at_index(list: List(String), index: Int) -> String {
-  list.drop(list, index)
-  |> list.first
-  |> result.unwrap("Nil")
+pub fn get_at_index(list: List(a), index: Int) -> a {
+  let assert Ok(value) =
+    list.drop(list, index)
+    |> list.first
+  value
 }
 
 pub fn get_at_index_list(list: List(List(String)), index: Int) -> List(String) {
