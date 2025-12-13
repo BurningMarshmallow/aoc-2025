@@ -1,3 +1,4 @@
+import gleam/dict.{type Dict}
 import gleam/int
 import gleam/list
 import gleam/pair
@@ -49,11 +50,22 @@ pub fn find_index(value: List(a), target: a) -> Result(Int, Nil) {
   |> result.map(pair.first)
 }
 
-pub fn get_at_index(list: List(a), index: Int) -> a {
+pub fn at(list: List(a), index: Int) -> a {
   let assert Ok(value) =
     list.drop(list, index)
     |> list.first
   value
+}
+
+pub fn update(list: List(a), index: Int, new_value: a) -> List(a) {
+  let before = list.take(list, index)
+  let rest = list.drop(list, index + 1)
+  before |> list.append([new_value]) |> list.append(rest)
+}
+
+pub fn unsafe_get(value: Dict(a, Int), key: a) -> Int {
+  dict.get(value, key)
+  |> result.unwrap(-1)
 }
 
 pub fn get_at_index_list(list: List(List(String)), index: Int) -> List(String) {
@@ -64,7 +76,7 @@ pub fn get_at_index_list(list: List(List(String)), index: Int) -> List(String) {
 
 pub fn get_at_index_2d(list: List(List(String)), i: Int, j: Int) -> String {
   get_at_index_list(list, i)
-  |> get_at_index(j)
+  |> at(j)
 }
 
 pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
@@ -73,6 +85,18 @@ pub fn generate_index_pairs(arr: List(a)) -> List(#(Int, Int)) {
   list.flat_map(indices, fn(i) {
     list.map(list.drop(indices, i + 1), fn(j) { #(i, j) })
   })
+}
+
+pub fn all_pairs(xs: List(a)) -> List(#(a, a)) {
+  generate_index_pairs(xs)
+  |> list.map(fn(pair) {
+    let #(i, j) = pair
+    #(at(xs, i), at(xs, j))
+  })
+}
+
+pub fn max(values: List(Int)) -> Int {
+  values |> list.reduce(int.max) |> result.unwrap(0)
 }
 
 pub fn read_range(value: String) -> List(Int) {

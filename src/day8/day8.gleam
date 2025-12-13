@@ -123,7 +123,7 @@ fn all_pairs(xs: List(a)) -> List(#(a, a)) {
   helpers.generate_index_pairs(xs)
   |> list.map(fn(pair) {
     let #(i, j) = pair
-    #(helpers.get_at_index(xs, i), helpers.get_at_index(xs, j))
+    #(helpers.at(xs, i), helpers.at(xs, j))
   })
 }
 
